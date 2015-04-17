@@ -1,0 +1,2 @@
+# HBMAnalyzer
+nHibernate log analyzer
