@@ -1,0 +1,12 @@
+/src/cs/*.suo
+/src/cs/HBMLogAnalyzer/bin/Debug/*.exe
+/src/cs/HBMLogAnalyzer/bin/Debug
+/src/cs/HBMLogAnalyzer/obj/Debug
+/src/cs/UnitTestProject1/bin/Debug
+/src/cs/UnitTestProject1/obj/Debug/*.cache
+/src/cs/UnitTestProject1/obj/Debug/UnitTestProject1.csproj.FileListAbsolute.txt
+/src/cs/UnitTestProject1/obj/Debug
+/src/cs/DepersonIt/*.user
+/src/cs/DepersonIt/bin
+/src/cs/DepersonIt/obj
+/data/
