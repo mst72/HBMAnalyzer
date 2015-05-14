@@ -13,7 +13,7 @@ namespace HBMLogAnalyzer
         {
             if (args.Length == 0)
             {
-                Console.WriteLine("Invalid command line. Pleas use:");
+                Console.WriteLine("Invalid command line. Please use:");
                 Console.WriteLine(" {0} tasks.cfg", AppDomain.CurrentDomain.FriendlyName );
                 Console.WriteLine("Press return to continue...");
                 Console.ReadLine();

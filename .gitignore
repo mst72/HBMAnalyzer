@@ -10,3 +10,13 @@
 /src/cs/DepersonIt/bin
 /src/cs/DepersonIt/obj
 /data/
+/src/cs/ElasticView/bin
+/src/cs/ElasticView/obj
+/src/cs/ElasticView/*.user
+/src/cs/PostgresLogAnalyzer/bin
+/src/cs/PostgresLogAnalyzer/obj
+/src/cs/PostgresLogAnalyzer/*.user
+/src/cs/Test.PostgresLogAnalyzer/bin
+/src/cs/Test.PostgresLogAnalyzer/obj
+/src/cs/Test.PostgresLogAnalyzer/*.user
+/src/cs/packages

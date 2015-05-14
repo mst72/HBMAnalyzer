@@ -1,6 +1,7 @@
 ﻿using HBMLogAnalyzer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Text.RegularExpressions;
 
 namespace UnitTestProject1
 {
@@ -79,5 +80,6 @@ namespace UnitTestProject1
             var actual = LogParserHelper.RecognizeOperation(chunk);
             Assert.AreEqual(Operations.Select, actual);
         }
+
     }
 }

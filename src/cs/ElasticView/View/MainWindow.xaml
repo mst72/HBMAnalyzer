@@ -1,0 +1,42 @@
+﻿<Window x:Class="ElasticView.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:ElasticView.ViewModel"
+        Title="Elastic View" Height="350" Width="525"
+        WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <local:MainViewModel x:Name="viewModel" RequestClose="OnCloseRequest"></local:MainViewModel>
+    </Window.DataContext>
+    <Window.InputBindings>
+        <KeyBinding x:Uid="KeyBinding_1" Key="X" Modifiers="Alt" Command="{Binding Path=CloseCommand}"></KeyBinding>
+    </Window.InputBindings>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Menu Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
+            <MenuItem Header="File">
+                <MenuItem Header="Connect" Command="{Binding Path=ConnectCommand}"></MenuItem>
+                <Separator></Separator>
+                <MenuItem Header="Exit" InputGestureText="Alt+X" Command="{Binding Path=CloseCommand}"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Elastic">
+                <MenuItem Header="Execute" Command="{Binding Path=ExecuteCommand}"></MenuItem>
+            </MenuItem>
+        </Menu>
+        <StatusBar Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3">
+            <StatusBarItem HorizontalAlignment="Left" Content="{Binding Status}"></StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Center"></StatusBarItem>
+            <!--
+            <ResizeGrip HorizontalAlignment="Right"></ResizeGrip>
+            -->
+        </StatusBar>
+    </Grid>
+</Window>
