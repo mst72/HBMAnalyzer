@@ -19,7 +19,9 @@ namespace HBMLogAnalyzer
             {
                 var fileName = Path.GetFileName(file);
                 if (fileName == null)
+                {
                     continue;
+                }
                 processFile(file, queriesPath);
             }
         }

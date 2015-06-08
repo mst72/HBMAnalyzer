@@ -20,3 +20,4 @@
 /src/cs/Test.PostgresLogAnalyzer/obj
 /src/cs/Test.PostgresLogAnalyzer/*.user
 /src/cs/packages
+/src/cs/HBMLogAnalyzer/*.user

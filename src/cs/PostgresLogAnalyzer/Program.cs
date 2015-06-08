@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using MongoDB.Driver;
 using Nest;
 
 namespace PostgresLogAnalyzer
@@ -28,6 +29,15 @@ namespace PostgresLogAnalyzer
                 Console.ReadLine();
                 return -1;
             }
+            // DoItWithElastics(path);
+            DoItWithMongo(path);
+            Console.WriteLine("Press return to continue...");
+            Console.ReadLine();
+            return 0;
+        }
+
+        private static void DoItWithElastics(string path)
+        {
             var settings = new ConnectionSettings(
                 node,
                 defaultIndex: "pg-logs"
@@ -62,9 +72,54 @@ namespace PostgresLogAnalyzer
                 }
                 processFile(file, client, indexName);
             }
-            Console.WriteLine("Press return to continue...");
-            Console.ReadLine();
-            return 0;
+        }
+
+        private static void DoItWithMongo(string path)
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var server = client.GetServer();
+            server.Connect();
+            var db = server.GetDatabase("test", new MongoDatabaseSettings());
+            db.Drop(); //
+            var fp = Path.GetFullPath(path).TrimEnd('\\');
+            foreach (var file in Directory.EnumerateFiles(fp, "*.log", SearchOption.AllDirectories))
+            {
+                var fileName = Path.GetFileName(file);
+                if (fileName == null)
+                    continue;
+                // adjust index name
+                List<string> prefixes = new List<string>();
+                var root = Path.GetDirectoryName(file);
+                while (!string.IsNullOrEmpty(root))
+                {
+                    if (root == fp)
+                    {
+                        break;
+                    }
+                    var prefix = Path.GetFileName(root);
+                    prefixes.Add(prefix);
+                    root = Path.GetDirectoryName(root);
+                }
+                var fnamePrefix = string.Join("-", prefixes);
+                var indexName = fileName;
+                if (!string.IsNullOrEmpty(fnamePrefix))
+                {
+                    indexName = string.Format("{0}-{1}", fnamePrefix, indexName);
+                }
+                processFile(file, db, indexName);
+            }
+            // test
+
+        }
+
+        private static void processFile(string fname, MongoDatabase client, string indexName)
+        {
+            Console.WriteLine("Source file: {0}", fname);
+            var parser = new LogParser();
+            var lines = parser.Load(fname);
+            Console.WriteLine("Parsed {0} lines", lines);
+            // save it
+            SaveIt(indexName, parser, client);
         }
 
         private static void processFile(string fname, ElasticClient client, string indexName)
@@ -123,6 +178,17 @@ namespace PostgresLogAnalyzer
                     body
                         .Index(index)
                         .Aggregations(aa => aa.Cardinality("ip", cc => cc.Field(p => p.Ip)))));
+            }
+        }
+
+        private static void SaveIt(string fname, LogParser parser, MongoDatabase client)
+        {
+            var index = fname;
+            Console.WriteLine("Indexing {0}", index);
+            var collection = client.GetCollection<LogItem>(index, new MongoCollectionSettings());
+            foreach (var item in parser.Items)
+            {
+                collection.Save(item);
             }
         }
 

@@ -68,6 +68,7 @@ namespace PostgresLogAnalyzer
         {
             DoneItem();
             currentItem = new LogItem();
+            currentItem.Id = Guid.NewGuid();
             currentItem.Line = line;
             currentItem.Stamp = m.Groups["stamp"].ToString();
             currentItem.Timezone = m.Groups["timezone"].ToString();

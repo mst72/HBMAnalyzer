@@ -8,6 +8,8 @@ namespace PostgresLogAnalyzer
 {
     public class LogItem
     {
+        public Guid Id { get; set; }
+
         public LogItem()
         {
             _value = new StringBuilder();
